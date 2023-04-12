@@ -1,0 +1,43 @@
+data1=data.frame(
+  name=c('alen','amal'),
+  class=c('s2ds','s4ds'),
+  DOB=c(2001,2002)
+)
+data2=data.frame(
+  name=c('alen','amal'),
+  mark1=c(50,40),
+  mark2=c(80,60)
+)
+#merging the data  
+data1
+data2
+maindata=merge(data1,data2,by.x='name',by.y='name')
+maindata
+
+
+
+#for finding pallindrome
+
+for (i in maindata$DOB){
+  n<-i
+  num<-n
+  rev<-0
+  while(n!=0){
+    rem<-n %% 10
+    rev<-rem+(rev*10)
+    n<-as.integer(n/10)
+  }
+  if(rev==num){
+    print(paste(num,"is palindrome"))
+    write.table(num,file="palindrome.txt")
+  }
+}
+# for finding max of rows and columns
+
+maximum=pmax(maindata$mark1,maindata$mark2)
+max1=max(maindata$mark1)
+max2=max(maindata$mark2)
+print(paste("maximum in row wise is",maximum))
+print(paste("maximum in column wise is",max1,max2))
+
+
