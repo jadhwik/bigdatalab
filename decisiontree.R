@@ -1,0 +1,31 @@
+library(datasets)
+library(caTools)
+library(rpart)
+library(party)
+library(e1071)
+library(dplyr)
+library(magrittr)
+
+
+data("readingSkills")
+head(readingSkills)
+
+sample_data = sample.split(readingSkills, SplitRatio = 0.8)
+train_data <- subset(readingSkills, sample_data == TRUE)
+test_data <- subset(readingSkills, sample_data == FALSE)
+
+model<- rpart(nativeSpeaker~.,data=train_data,method="class")
+plot(model)
+text(model, use.n = TRUE)
+
+
+model.predictions <- predict(model, test_data, type = "class")
+
+svm <- svm(nativeSpeaker ~ ., data = train_data, kernel = "linear")
+
+svm.predictions <- predict(svm, test_data)
+
+ac_Test <- sum(diag(m_at)) / sum(m_at)
+print(paste('Accuracy for test is found to be', ac_Test))
+
+
